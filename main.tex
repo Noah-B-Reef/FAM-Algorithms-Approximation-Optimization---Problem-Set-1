@@ -1,0 +1,294 @@
+\documentclass[12pt]{report}
+\usepackage{scribe,graphicx,graphics}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+
+\lstset{style=mystyle}
+
+
+\course{FAM} 	
+\coursetitle{Algorithms, Approx, Optimization}	
+\semester{Summer 2024}
+\lecturer{} % Due Date: {\bf Mon, Oct 3 2016}}
+\lecturetitle{Problem Set}
+\lecturenumber{1}   
+\lecturedate{}    
+\input{commands.tex}
+
+% Insert your name here!
+\scribe{Student Name: Noah Reef}
+
+\begin{document}
+
+
+\maketitle
+
+\section*{Problem 1}
+\begin{enumerate}[(i)]
+    \item Let $f(n) = 3n-1$ then we see that
+    \begin{equation*}
+        |f(n)| = |3n-1| \leq 3n + 1 \leq 4n
+    \end{equation*}
+    for $n \geq 1$, and thus $f(n) \in O(n)$
+    \item Let $f(n) = 3n-1$ then we see that for $0 < \epsilon < 3 $ we have,
+    \begin{equation*}
+        |f(n)| = |3n-1| \leq 3n + 1 \leq \epsilon n  
+    \end{equation*}
+    which implies that above inequality is only true for $n \leq \frac{1}{\epsilon - 3}$ and thus $f(n) \not\in o(n)$
+    \item Let $f(n) = 3n-1$ then we see that 
+    \begin{equation*}
+        |f(n)| = |3n-1| \leq 3n + 1 \leq 4n \leq 4n^2
+    \end{equation*}
+    is true for $n \geq 1$ thus we see that $f(n) \in O(n^2)$
+    \item Let $f(n) = 1$ then we see that 
+    \begin{equation*}
+        |f(n)| = 1 \leq n
+    \end{equation*}
+    for $n \geq 1$ thus $f(n) \in O(n)$.
+\end{enumerate}
+
+\section*{Problem 2}
+\begin{enumerate}[(i)]
+    \item \textbf{Proof.} Let $f_1(n), h(n) \in O(g(n))$ and $f_2(n) \in O(h(n))$. Then we see that,
+    \begin{equation*}
+        |h(n)| \leq M|g(n)|
+    \end{equation*}
+    for $M > 0$ and $n \geq N_0$, and
+    \begin{equation*}
+        |f_1(n)| \leq K|g(n)|
+    \end{equation*}
+    for $K > 0$ and $n \geq N_1$
+    \begin{equation*}
+        |f_2(n)| \leq L|h(n)| 
+    \end{equation*}
+    for $L > 0$ and $n \geq N_2$. Then for $N = \max\{N_0,N_1, N_2\}$ we have the following inequality
+    \begin{equation*}
+        |f_1(n) + f_2(n)| \leq |f_1(n)| + |f_2(n)| \leq K|g(n)| + L|h(n)| \leq (K+LM) |g(n)|
+    \end{equation*}
+    thus $f_1(n) + f_2(n) \in O(g(n))$.
+    \item \textbf{Proof.} Suppose that $f_1(n), h(n) \in o(g(n))$ and $f_2(n) \in O(h(n))$. Then we have that for $\epsilon > 0$ there exists an $N_0$ such that for $n \geq N_0$ we have,
+    \begin{equation*}
+        |f_1(n)| \leq \epsilon|g(n)|
+    \end{equation*}
+    and for every $\epsilon' > 0$ there exists an $N_1$ such that for $n \geq N_1$ we have,
+    \begin{equation*}
+        |h(n)| \leq \epsilon'|g(n)| 
+    \end{equation*}
+    Lastly we have there exists an $M > 0$ and $N_2$ such that
+    \begin{equation*}
+        |f_2(n)| \leq M|h(n)|
+    \end{equation*}
+    holds for $n \geq N_2$. Let $N = \max\{N_0,N_1, N_2\}$, then we have the following inequality,
+    \begin{equation*}
+     |f_1(n) + f_2(n)| \leq |f_1(n)| + |f_2(n)| \leq \epsilon|g(n)| + M|h(n)| \leq (\epsilon + M\epsilon')|g(n)|
+    \end{equation*}
+    thus $f_1(n) + f_2(n) \in o(g(n))$.
+    \item \textbf{Proof.} Consider the function $f(n) = a_kn^k + a_{k-1}n^{k-1} + \dots + a_1n + a_0$ for $k \in \N$ and $a_k,a_{k-1},\dots,a_1,a_0 \in \R$. Now for $n \geq 1$ we have the following
+    \begin{align*}
+        |f(n)| &= |a_kn^k + a_{k-1}n^{k-1} + \dots + a_1n + a_0| \\
+        &\leq |a_k|n^k + |a_{k-1}|n^{k-1} + \dots + |a_1|n + |a_0| \\
+        & \leq \left(|a_k|+ |a_{k-1}|+ \dots + |a_1| + |a_0|\right) n^k
+    \end{align*}
+    thus $f(n) \in O(n^k)$
+\end{enumerate}
+\section*{Problem 3}
+\textbf{Proof.} Let $f$ and $g$ be real-valued functions on either the positive real numbers or the positive integers and suppose that,
+\begin{equation*}
+    \lim_{x \to \infty} \frac{|f(x)|}{|g(x)|} \leq M
+\end{equation*}
+for some $M > 0$. Since the limit is bounded from above we have that there exists an $x_0$ such that for $x \geq x_0$ we have
+\begin{equation*}
+   \frac{|f(x)|}{|g(x)|}  \leq M
+\end{equation*}
+re-arranging terms we have
+\begin{equation*}
+    |f(x)| \leq M |g(x)|
+\end{equation*}
+and thus $f(x) \in O(g(x))$. Next suppose that
+\begin{equation*}
+    \lim_{x \to \infty} \frac{|f(x)|}{|g(x)|} = \infty
+\end{equation*}
+and by way of contradiction assume that $f(x) \in O(g(x))$. Then we have that there exists some $L > 0$ and $x_0'$ such that for $x \geq x_0'$ the following is true
+\begin{equation*}
+    |f(x)| \leq L|g(x)|
+\end{equation*}
+re-arranging terms we get,
+\begin{equation*}
+    \frac{|f(x)|}{|g(x)|} \leq L
+\end{equation*}
+and since this inequality is true for $x \geq x_0'$ then we also have,
+\begin{equation*}
+    \lim_{x \to \infty} \frac{|f(x)|}{|g(x)|} \leq L
+\end{equation*}
+which contradicts the assumption that the limit tends towards $\infty$. Thus $f(x) \not\in O(g(x))$. Note that dividing both sides by $|g(x)|$ is not an issue since the limit in the hypothesis is defined, thus $|g(x)| > 0$ for sufficiently large $x$. Next assume that 
+\begin{equation*}
+    \lim_{x \to \infty} \frac{|f(x)|}{|g(x)|} = 0
+\end{equation*}
+thus the limit converges and by definition for every $\epsilon > 0$ there exists an $x_0''$ such that for all $x \geq x_0''$ we have
+\begin{equation*}
+    \left| \frac{|f(x)|}{|g(x)|} - 0\right| < \epsilon
+\end{equation*}
+cleaning up the expression we get,
+\begin{equation*}
+    |f(x)| < \epsilon |g(x)|
+\end{equation*}
+and hence by definition $f(x) \in o(g(x))$. Next assume that $f(x) \in o(g(x))$, then for every $\epsilon > 0$ there exists an $x_0''$ such that for all $x \geq x_0''$ we have,
+\begin{equation*}
+    |f(x)| \leq \epsilon |g(x)|
+\end{equation*}
+re-arranging terms and subtracting by $0$ we get,
+\begin{equation*}
+    \left| \frac{|f(x)|}{|g(x)|} - 0\right| \leq \epsilon
+\end{equation*}
+and hence
+\begin{equation*}
+    \lim_{x \to \infty}  \frac{|f(x)|}{|g(x)|} = 0
+\end{equation*} \qed
+
+\section*{Problem 4}
+\textbf{Proof.} Consider the function
+\begin{equation*}
+    f(n) = \sum_{k=0}^n k^m
+\end{equation*}
+for $m \in \N$. We can see that
+\begin{equation*}
+    |f(n)| = f(n) =  \sum_{k=0}^n k^m \leq  \sum_{k=0}^n n^m = (n+1)n^m =n^{m+1} + n^m \leq 2n^{m+1}
+\end{equation*}
+thus $f(n) \in O(n^{m+1})$. \qed
+
+\section*{Problem 5}
+Let $p > 0$ and $a > 1$ then
+\begin{enumerate}[(i)]
+    \item Let $f(n) \in O(\log n)$ then we see that there exists an $M > 0$ and $N \in \N$ such that for all $n \geq N$ we have
+    \begin{equation*}
+        |f(n)| \leq M |\log n|
+    \end{equation*}
+    then we see that for every $\epsilon > 0$ there exists an $N'$ such that for every $n \geq N'$ we have
+    \begin{equation*}
+        M\log n \leq \epsilon n^p \implies n^p \geq \frac{M\log n}{\epsilon}
+    \end{equation*}
+    Letting $N* = \max\{N, N^*\}$ then we see that for every $n \geq N^*$ we have
+    \begin{equation*}
+        |f(x)| \leq M|\log(n)| \leq \epsilon n^p
+    \end{equation*}
+    thus $f(n) \in o(n^p)$ and since $f(n)$ was arbitrary we have that $O(\log n) \subset o(n^p)$. Now, by way of contradiction, assume that $\log n \in O(1)$, then there exists a $L >0$ and $N$ such that for all $n \geq N$ we have,
+    \begin{equation*}
+        |\log n| \leq L |1| = L
+    \end{equation*}
+    then we see that for sufficient large $n$ the above inequality does not hold, thus $\log n \not \in O(1)$.
+    \item Consider the function $f(n) = n\log n$ (letting $n \geq 1$) and for $\epsilon > 0$ consider the following inequality
+    \begin{equation*}
+        n\log n \leq \epsilon n^{1+p} \implies \log n \leq \epsilon n^p
+    \end{equation*}
+    but since $\log n \in O(\log n)$ and $O(\log n) \subset o(n^p)$ we have that $\log n \in o(n^p)$, thus for every $\epsilon > 0$ there exists an $N$ such that for all $n \geq N$ the above inequality holds and thus $n\log n \in o(n^{1+p})$. Note that we can also shows this by considering the following limit,
+    \begin{equation*}
+        \lim_{n \to \infty} \frac{n\log n}{n^{1+p}} = \lim_{n \to \infty}\frac{\log n}{n^p} \stackrel{\tiny{(L'Hopital)}}{=} \lim_{n \to \infty} \frac{1/n}{pn^{p-1}} = \lim_{n\to \infty} \frac{1}{pn^p} = 0
+    \end{equation*}
+    and thus $n\log n \in o(n^{1+p})$ by Proposition 1.1.13.
+    
+    Now, by way of contradiction, assume that $n\log n \in O(n)$ then we have that there exists an $L > 0$ and $N > 1$ such that for all $n \geq N$ we have,
+    \begin{equation*}
+        n\log n \leq Ln \implies \log n \leq L
+    \end{equation*}
+    which for sufficiently large $n$ the above inequality does not hold, thus $n\log n \not\in O(n)$.
+    \item Let $f(n) \in O(n^p)$ then there exists an $M > 0$ and $N$ such that for all $n \geq N$ we have the following inequality
+    \begin{equation*}
+        |f(n)| \leq M|n^p|
+    \end{equation*}
+    next consider the following the inequality
+    \begin{equation*}
+        Mn^p \leq \epsilon a^n \implies \frac{M}{\epsilon}n^p \leq a^n
+    \end{equation*}
+    for $\epsilon > 0$. Here we see that for sufficiently large $n \geq N'$ the inequality holds thus for every $\epsilon > 0$ there exists an $N^* = \max\{N,N'\}$ such that
+    \begin{equation*}
+         |f(n)| \leq M|n^p| \leq \epsilon|a^n|
+    \end{equation*}
+    thus $f(n) \in o(a^n)$ and since $f(n)$ is arbitrary we have that $O(n^p) \subset o(a^n)$.
+\end{enumerate}
+
+\section*{Problem 6}
+\begin{enumerate}[(i)]
+    \item The code can be found at: \url{https://github.com/Noah-B-Reef/FAM-Volume-2/blob/main/Section%201/P1.6.py}\lstinputlisting[language=Python]{P1.6.py}
+    
+    \item Similar to Algorithm 1.2, appending $d$ elements to a list of length $k$ creates a new list of $d + k$ length. We then copy over the $d + k$ entries to a new list. This given $d + k \leq n$ (where $n$ is the length of the longer list) thus this gives $O(n)$ to the temporal complexity. The initialization of the initial values takes constant time and thus does not add to the time complexity. Lastly each step in the \texttt{while} loop takes constant time and goes through for $n$ iterations, this too costs $O(n)$ primitive operations. Thus the temporal complexity of the algorithm is $O(n)$.
+    each list will contain $n$ elements and each of the constant variables are bounded by $\log n$ to represent its value, thus the spatial complexity is of $O(n)$.
+\end{enumerate}
+
+\section*{Problem 7}
+
+\begin{enumerate}[(i)]
+    \item Consider the sequence given by $\{x_n\}_{n=0}^\infty$ where each $x_n = \frac{F_{n+1}}{F_n}$ with $\{F_j\}_{j=0}^\infty$ are given by $F_{i+1} = F_{i} + F_{i-1}$ and $F_0 = 0$ and $F_1 = 1$. Suppose the limit, $\lim_{n \to \infty} x_n$, converges. Note that we can rewrite each $x_n$ as
+\begin{equation*}
+    x_n = \frac{F_{n+1}}{F_n} = \frac{F_{n} + F_{n-1}}{F_n} = 1 + \frac{F_{n-1}}{F_n} = 1 + \frac{1}{x_{n-1}}
+\end{equation*}
+then we see that in the limit,
+\begin{equation*}
+    x = 1 + \frac{1}{x} \implies x^2-x-1 = 0
+\end{equation*}
+solving for the limit value $x$ we get,
+\begin{equation*}
+    x = \frac{1 \pm \sqrt{5}}{2}
+\end{equation*}
+but since the ratio is strictly positive, so is the limit thus
+\begin{equation*}
+    \lim_{n \to \infty} x_n = \phi = \frac{1 + \sqrt{5}}{2}
+\end{equation*}
+Next we see that
+\begin{align*}
+    \phi^2 &= \left(\frac{1 + \sqrt{5}}{2}\right)^2 \\
+    &= \frac{1 + 2\sqrt{5} + 5}{4} = \frac{6 + 2\sqrt{5}}{4} \\
+    &= \frac{3 + \sqrt{5}}{2} = 1 + \frac{1 + \sqrt{5}}{2} = 1 + \phi
+\end{align*}
+thus $\phi^2 = 1 + \phi$. To inductively prove that $\phi F_n + F_{n-1} = \phi^n$ we first consider the base case where $n = 2$, then we have that $\phi F_2 + F_1 = \phi + 1 = \phi^2$ and hence the base case is established. Next suppose $\phi F_k + F_{k-1} = \phi^k$ and consider 
+\begin{align*}
+    \phi F_{k+1} + F_k &= \phi(F_k + F_{k-1}) + F_k \\
+    &= (\phi F_k + F_{k}) + \phi F_{k-1} \\
+    &= F_k(\phi + 1) + \phi F_{k-1} \\
+    &= F_k(\phi^2) +  \phi F_{k-1} \\
+    & = \phi (\phi F_k + F_{k-1}) = \phi \phi^k = \phi^{k+1}
+\end{align*}
+thus the inductive step has been established and hence we have proven that $\phi F_n + F_{n-1} = \phi^n$. Next we see that
+\begin{equation*}
+    |F_n| = \phi^{n-1} - \frac{F_{n-1}}{\phi} \leq \phi^n
+\end{equation*}
+thus $F_n \in O(\phi^n)$ \qed
+\item Let $a > 0$ and $G_n = a^ne^{1 + \frac{1}{2} + \dots + \frac{1}{n}}$ and consider the limit
+\begin{equation*}
+    \lim_{n \to \infty} \frac{G_{n}}{G_{n-1}} = \lim_{n \to \infty} \frac{ a^ne^{1 + \frac{1}{2} + \dots + \frac{1}{n}}}{ a^{n-1}e^{1 + \frac{1}{2} + \dots + \frac{1}{n-1}}} = \lim_{n \to \infty} ae^{1/n} = ae^0 = a 
+\end{equation*}
+Next, by way of contradiction, assume that $G_n \in O(a^n)$, that is there exists an $M > 0$ and $N$ such that for all $n \geq N$ we have
+\begin{equation*}
+    G_n =  a^ne^{1 + \frac{1}{2} + \dots + \frac{1}{n}}\leq Ma^n
+\end{equation*}
+cancelling $a^n$ on both sides yields 
+\begin{equation*}
+    e^{1 + \frac{1}{2} + \dots + \frac{1}{n}}\leq M
+\end{equation*}
+since $\sum_{k=1}^n \frac{1}{k}$ diverges the inequality does not hold for sufficiently large $n$ and thus $G_n \not\in O(a^n)$. \qed
+\end{enumerate}
+\end{document}
